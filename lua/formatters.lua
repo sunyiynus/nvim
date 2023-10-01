@@ -1,6 +1,20 @@
 -- Utilities for creating configurations
 local util = require("formatter.util")
 
+local cppconfig = {
+	function()
+		return {
+			exe = "clang-format",
+			args = {
+				"-assume-filename=",
+				vim.fn.shellescape(vim.api.nvim_buf_get_name(0)),
+				'-style=file',
+			},
+			stdin = true,
+		}
+	end,
+}
+
 -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
 require("formatter").setup({
 	-- Enable or disable logging
@@ -38,6 +52,8 @@ require("formatter").setup({
 				}
 			end,
 		},
+
+		cpp = cppconfig,
 
 		-- Use the special "*" filetype for defining formatter configurations on
 		-- any filetype
